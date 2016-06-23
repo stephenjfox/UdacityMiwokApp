@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,38 +32,55 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
+
+        setButtonClickListeners();
     }
 
-    public void openMyActivity( View view ) {
+    private void setButtonClickListeners() {
+        TextView colorsButton = (TextView) findViewById(R.id.colors);
+        assert ( colorsButton != null );
+        colorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                openMyActivity(v, ColorsActivity.class);
+            }
+        });
+
+        TextView numbersButton = (TextView) findViewById(R.id.numbers);
+        assert numbersButton != null;
+        numbersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                openMyActivity(v, NumbersActivity.class);
+            }
+        });
+
+        TextView familyButton = (TextView) findViewById(R.id.family);
+        assert familyButton != null;
+        familyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                openMyActivity(v, FamilyActivity.class);
+            }
+        });
+
+        TextView phrasesButton = (TextView) findViewById(R.id.phrases);
+        assert phrasesButton != null;
+        phrasesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                openMyActivity(v, PhrasesActivity.class);
+            }
+        });
+    }
+
+    private void openMyActivity( View view, Class<?> activityLoadClass ) {
         Log.d(TAG, "openMyActivity() called with: " + "view = [" + view + "]");
         String _name = getResources().getResourceEntryName(view.getId());
         Log.d(TAG, "openMyActivity: view.id = " + _name);
 
-        Intent i = new Intent(this, pickActivityFrom(_name));
+        Intent i = new Intent(this, activityLoadClass);
         startActivity(i);
     }
 
-    // we can do this with polymorphism
-    private Class<?> pickActivityFrom( String name ) {
-
-        Class<?> _class;
-        switch (name) {
-            case "numbers":
-                _class = NumbersActivity.class;
-                break;
-            case "family":
-                _class = FamilyActivity.class;
-                break;
-            case "phrases":
-                _class = PhrasesActivity.class;
-                break;
-            case "colors":
-                _class = ColorsActivity.class;
-                break;
-            default:
-                throw new IllegalArgumentException("Passed name [" + name + "] cannot be parsed");
-        }
-
-        return _class;
-    }
 }
