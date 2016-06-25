@@ -1,6 +1,7 @@
 package com.example.android.miwok;
 
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.AbsListView;
@@ -17,9 +18,15 @@ import java.util.List;
  */
 public class AbstractListActivity extends AppCompatActivity {
     protected List<Word> mWords;
+    protected @ColorRes int mBackgroundColorResource = -1;
 
     public AbstractListActivity(List<Word> targetWords) {
         mWords = targetWords;
+    }
+
+    public AbstractListActivity( List<Word> targetWords, @ColorRes int colorResource) {
+        mWords = targetWords;
+        mBackgroundColorResource = colorResource;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class AbstractListActivity extends AppCompatActivity {
         // Be generic and code to an interface
         AbsListView _listView = (ListView) findViewById(R.id.rootListView);
 
-        WordAdapter _adapter = new WordAdapter(this, mWords);
+        WordAdapter _adapter = new WordAdapter(this, mWords, mBackgroundColorResource);
 
         _listView.setAdapter(_adapter);
     }

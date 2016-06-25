@@ -4,6 +4,7 @@ package com.example.android.miwok.model;
  * Created by stefox2 on 6/23/16.
  */
 public class Word {
+    private static final int NO_IMAGE_ID = 0;
     private String mDefaultTranslation;
     private String mMiwokTranslation;
     private int mImageResourceId;
@@ -17,6 +18,7 @@ public class Word {
     public Word( String defaultTranslation, String foreignTranslation ) {
         this.mDefaultTranslation = defaultTranslation;
         this.mMiwokTranslation = foreignTranslation;
+        this.mImageResourceId = NO_IMAGE_ID;
     }
 
     public String getDefaultTranslation() {
@@ -34,5 +36,9 @@ public class Word {
     @Override
     public String toString() {
         return String.format("Word{ default = \"%s\", miwok = \"%s\" }", mDefaultTranslation, mMiwokTranslation);
+    }
+
+    public boolean hasImage() {
+        return this.mImageResourceId != NO_IMAGE_ID;
     }
 }

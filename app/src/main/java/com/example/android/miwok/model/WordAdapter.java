@@ -1,12 +1,14 @@
 package com.example.android.miwok.model;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.android.miwok.R;
 
@@ -19,13 +21,15 @@ import java.util.List;
 public class WordAdapter extends ArrayAdapter<Word> {
 
     private static final String LOG_TAG = WordAdapter.class.getSimpleName();
-
-    public WordAdapter( Context context, Word[] words ) {
-        super(context, 0, words);
-    }
+    private int mItemBackgroundColor = -1;
 
     public WordAdapter( Context context, List<Word> words ) {
         super(context, 0, words);
+    }
+
+    public WordAdapter( Context context, List<Word> words, @ColorRes int itemBackgroundColor) {
+        super(context, 0, words);
+        mItemBackgroundColor = itemBackgroundColor;
     }
 
     @Override
@@ -41,6 +45,12 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         Log.d(LOG_TAG, "getView: word = " + _word);
 
+        if (this.mItemBackgroundColor > -1) {
+            LinearLayout _textLayout = (LinearLayout) _listItemView.findViewById(R.id.textVocabLayout);
+            // we need a new background
+            _textLayout.setBackgroundResource(mItemBackgroundColor);
+        }
+
         // Get the first TextView
         TextView foreignTextView = (TextView) _listItemView.findViewById(R.id.foreignText);
         // Set its text
@@ -55,6 +65,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
         ImageView _imageView = (ImageView) _listItemView.findViewById(R.id.vocabImage);
 
         _imageView.setImageResource(_word.getImageResourceId());
+
+        if (!_word.hasImage()) {
+            _imageView.setVisibility(View.GONE);
+        }
 
         return _listItemView;
     }

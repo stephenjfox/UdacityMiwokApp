@@ -5,6 +5,7 @@ import com.example.android.miwok.model.WordStore;
 public class ColorsActivity extends AbstractListActivity {
 
     public ColorsActivity() {
-        super(WordStore.COLORS_VOCAB);
+        super(WordStore.COLORS_VOCAB,
+                R.color.category_colors);
     }
 }
