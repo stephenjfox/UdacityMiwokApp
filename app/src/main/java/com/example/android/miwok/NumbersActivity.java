@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.example.android.miwok.model.Word;
+import com.example.android.miwok.model.WordAdapter;
 
 import java.util.ArrayList;
 
@@ -13,17 +14,17 @@ public class NumbersActivity extends AppCompatActivity
 {
     private static final String TAG = NumbersActivity.class.getName();
 
-    private ArrayList<String> words = new ArrayList<String>(10) {{
-        add("one");
-        add("two");
-        add("three");
-        add("four");
-        add("five");
-        add("six");
-        add("seven");
-        add("eight");
-        add("nine");
-        add("ten");
+    private ArrayList<Word> words = new ArrayList<Word>(10) {{
+        add(new Word("one", "lutti"));
+        add(new Word("two", "otiiko"));
+        add(new Word("three", "tolookosu"));
+        add(new Word("four", "oyyisa"));
+        add(new Word("five", "massokka"));
+        add(new Word("six", "temmokka"));
+        add(new Word("seven", "kenekaku"));
+        add(new Word("eight", "kawinta"));
+        add(new Word("nine", "wo'e"));
+        add(new Word("ten", "na'aacha"));
     }};
 
     @Override
@@ -36,8 +37,8 @@ public class NumbersActivity extends AppCompatActivity
 
         AbsListView _listView = (ListView) findViewById(R.id.rootNumbersView);
         // TODO: why doesn't android.R.layout.simple_list_item2 work?
-        ArrayAdapter<String> _adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words);
-        // TODO: switch that ^^^ back to custom vocab_list_item
+        WordAdapter _adapter = new WordAdapter(this, words);
+
         _listView.setAdapter(_adapter);
     }
 
