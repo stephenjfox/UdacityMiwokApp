@@ -6,10 +6,17 @@ package com.example.android.miwok.model;
 public class Word {
     private String mDefaultTranslation;
     private String mMiwokTranslation;
+    private int mImageResourceId;
 
-    public Word( String base, String foreign ) {
+    public Word( String base, String foreign, int imageResourceId ) {
         this.mDefaultTranslation = base;
         this.mMiwokTranslation = foreign;
+        this.mImageResourceId = imageResourceId;
+    }
+
+    public Word( String defaultTranslation, String foreignTranslation ) {
+        this.mDefaultTranslation = defaultTranslation;
+        this.mMiwokTranslation = foreignTranslation;
     }
 
     public String getDefaultTranslation() {
@@ -18,6 +25,10 @@ public class Word {
 
     public String getMiwokTranslation() {
         return mMiwokTranslation;
+    }
+
+    public int getImageResourceId() {
+        return mImageResourceId;
     }
 
     @Override
