@@ -1,6 +1,7 @@
 package com.example.android.miwok.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import com.example.android.miwok.R;
 import java.util.List;
 
 /**
+ * Custom Adapter for showing our model.Word type
  * Created by stefox2 on 6/25/16.
  */
 public class WordAdapter extends ArrayAdapter<Word> {
+
+    private static final String LOG_TAG = WordAdapter.class.getSimpleName();
 
     public WordAdapter( Context context, Word[] words ) {
         super(context, 0, words);
@@ -33,6 +37,8 @@ public class WordAdapter extends ArrayAdapter<Word> {
         }
 
         Word _word = getItem(position);
+
+        Log.d(LOG_TAG, "getView: word = " + _word);
 
         // Get the first TextView
         TextView foreignTextView = (TextView) _listItemView.findViewById(R.id.foreignText);

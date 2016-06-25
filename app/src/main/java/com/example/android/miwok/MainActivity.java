@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void openMyActivity( View view, Class<?> activityLoadClass ) {
         Log.d(TAG, "openMyActivity() called with: " + "view = [" + view + "]");
+
+        // This is just extra logging, so memory's sake
         String _name = getResources().getResourceEntryName(view.getId());
         Log.d(TAG, "openMyActivity: view.id = " + _name);
 
