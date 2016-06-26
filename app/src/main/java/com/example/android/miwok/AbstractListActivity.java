@@ -66,12 +66,15 @@ public class AbstractListActivity extends AppCompatActivity {
         });
     }
 
-    private void logWords() {
-        String TAG = this.getClass().getName();
-        for ( int i = 0; i < mWords.size(); i++ ) {
-            Log.d(TAG, "Word at index " + i + ": " + mWords.get(i));
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
     }
+
+    /////////////////////////////
+    //         HELPERS         //
+    /////////////////////////////
 
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
@@ -79,6 +82,13 @@ public class AbstractListActivity extends AppCompatActivity {
             releaseMediaPlayer();
         }
     };
+
+    private void logWords() {
+        String TAG = this.getClass().getName();
+        for ( int i = 0; i < mWords.size(); i++ ) {
+            Log.d(TAG, "Word at index " + i + ": " + mWords.get(i));
+        }
+    }
 
     private void releaseMediaPlayer() {
         if ( mMediaPlayer != null ) {
