@@ -54,7 +54,8 @@ public class Word {
 
     @Override
     public String toString() {
-        return String.format("Word{ default = \"%s\", miwok = \"%s\" }", mDefaultTranslation, mMiwokTranslation);
+        return String.format("Word{ default=\"%s\", miwok=\"%s\", audioId=%d, imageId=%d }",
+                mDefaultTranslation, mMiwokTranslation, mAudioResourceId, mImageResourceId);
     }
 
     public boolean hasImage() {

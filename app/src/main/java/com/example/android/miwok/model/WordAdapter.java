@@ -1,7 +1,6 @@
 package com.example.android.miwok.model;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.support.annotation.ColorRes;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,24 +70,6 @@ public class WordAdapter extends ArrayAdapter<Word> {
             _imageView.setVisibility(View.GONE);
         }
 
-        if (_word.hasAudio()) bindClickToExistentAudio(_listItemView, _word);
-
         return _listItemView;
-    }
-
-    private void bindClickToExistentAudio( View itemView, final Word word ) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            MediaPlayer mPlayer = MediaPlayer.create(WordAdapter.this.getContext(), word.getAudioResourceId());
-            @Override
-            public void onClick( View v ) {
-                mPlayer.start();
-//                try {
-////                    mPlayer.prepare();
-//                }
-//                catch (IOException e) {
-//                    Log.e(TAG, "onClick: mPlayer.prepare() threw", e);
-//                }
-            }
-        });
     }
 }
