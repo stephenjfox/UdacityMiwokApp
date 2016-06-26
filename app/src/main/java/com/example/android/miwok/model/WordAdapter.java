@@ -1,6 +1,7 @@
 package com.example.android.miwok.model;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.ColorRes;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    private static final String LOG_TAG = WordAdapter.class.getSimpleName();
+    private static final String TAG = WordAdapter.class.getSimpleName();
     private int mItemBackgroundColor = -1;
 
     public WordAdapter( Context context, List<Word> words ) {
@@ -43,7 +44,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         Word _word = getItem(position);
 
-        Log.d(LOG_TAG, "getView: word = " + _word);
+        Log.d(TAG, "getView: word = " + _word);
 
         if (this.mItemBackgroundColor > -1) {
             LinearLayout _textLayout = (LinearLayout) _listItemView.findViewById(R.id.textVocabLayout);
@@ -70,6 +71,24 @@ public class WordAdapter extends ArrayAdapter<Word> {
             _imageView.setVisibility(View.GONE);
         }
 
+        if (_word.hasAudio()) bindClickToExistentAudio(_listItemView, _word);
+
         return _listItemView;
+    }
+
+    private void bindClickToExistentAudio( View itemView, final Word word ) {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            MediaPlayer mPlayer = MediaPlayer.create(WordAdapter.this.getContext(), word.getAudioResourceId());
+            @Override
+            public void onClick( View v ) {
+                mPlayer.start();
+//                try {
+////                    mPlayer.prepare();
+//                }
+//                catch (IOException e) {
+//                    Log.e(TAG, "onClick: mPlayer.prepare() threw", e);
+//                }
+            }
+        });
     }
 }
