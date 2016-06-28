@@ -1,5 +1,7 @@
 package com.example.android.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -33,6 +35,10 @@ public class AbstractListActivity extends AppCompatActivity {
         mBackgroundColorResource = colorResource;
     }
 
+    /////////////////////////////
+    //      Life Cycle         //
+    /////////////////////////////
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -54,13 +60,21 @@ public class AbstractListActivity extends AppCompatActivity {
 
                 releaseMediaPlayer();
 
-                if (_word.hasAudio()) {
-                    mMediaPlayer = MediaPlayer.create(
-                            AbstractListActivity.this, _word.getAudioResourceId());
+                if (_word.hasAudio()) { // TODO: remove this check?
 
-                    mMediaPlayer.start();
+                    AudioManager _audioManager = (AudioManager) getApplicationContext()
+                            .getSystemService(Context.AUDIO_SERVICE);
+                    int _requestAudioFocus = _audioManager.requestAudioFocus(mAudioFocusChangeListener,
+                            AudioManager.STREAM_MUSIC,
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                    if (_requestAudioFocus == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                        mMediaPlayer = MediaPlayer.create(
+                                AbstractListActivity.this, _word.getAudioResourceId());
 
-                    mMediaPlayer.setOnCompletionListener(mCompletionListener);
+                        mMediaPlayer.start();
+
+                        mMediaPlayer.setOnCompletionListener(mCompletionListener);
+                    }
                 }
             }
         });
@@ -71,6 +85,42 @@ public class AbstractListActivity extends AppCompatActivity {
         super.onStop();
         releaseMediaPlayer();
     }
+
+    ////////////////////////////////////////////////////////////
+    //         AudioFocus.OnAudioFocusChangedListener         //
+    ////////////////////////////////////////////////////////////
+
+    private AudioManager.OnAudioFocusChangeListener mAudioFocusChangeListener =
+            new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange( int focusChange ) {
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    if ( mMediaPlayer != null ) {
+                        mMediaPlayer.start();
+                    }
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    if ( mMediaPlayer != null ) {
+                        mMediaPlayer.stop();
+                        releaseMediaPlayer();
+                    }
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    if ( mMediaPlayer != null ) {
+                        mMediaPlayer.pause();
+                    }
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    if ( mMediaPlayer != null ) {
+                        mMediaPlayer.pause();
+                    }
+                    break;
+                default:
+                    releaseMediaPlayer();
+            }
+        }
+    };
 
     /////////////////////////////
     //         HELPERS         //
@@ -94,6 +144,10 @@ public class AbstractListActivity extends AppCompatActivity {
         if ( mMediaPlayer != null ) {
             mMediaPlayer.release();
             mMediaPlayer = null;
+
+            AudioManager _am = (AudioManager) getApplicationContext()
+                    .getSystemService(Context.AUDIO_SERVICE);
+            _am.abandonAudioFocus(mAudioFocusChangeListener);
         }
     }
 }

@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.android.miwok.R;
 
@@ -46,9 +46,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
         Log.d(TAG, "getView: word = " + _word);
 
         if (this.mItemBackgroundColor > -1) {
-            LinearLayout _textLayout = (LinearLayout) _listItemView.findViewById(R.id.textVocabLayout);
+            ViewGroup _owningLayout = (GridLayout) _listItemView.findViewById(R.id.hostingGrid);
+//            LinearLayout _textLayout = (LinearLayout) _listItemView.findViewById(R.id.textVocabLayout);
             // we need a new background
-            _textLayout.setBackgroundResource(mItemBackgroundColor);
+            _owningLayout.setBackgroundResource(mItemBackgroundColor);
         }
 
         // Get the first TextView
