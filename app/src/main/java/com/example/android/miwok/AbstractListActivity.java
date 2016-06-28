@@ -1,12 +1,15 @@
 package com.example.android.miwok;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -45,6 +48,10 @@ public class AbstractListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
+        ActionBar _actionBar = getActionBar();
+        if ( _actionBar != null ) {
+            _actionBar.setDisplayHomeAsUpEnabled(true); // to shut up warnings
+        }
         logWords();
 
         // Be generic and code to an interface
@@ -84,6 +91,19 @@ public class AbstractListActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         releaseMediaPlayer();
+    }
+
+    // This is a juvenile implementation, but our app doesn't receive intents
+    // so it will suffice
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     ////////////////////////////////////////////////////////////
