@@ -17,14 +17,13 @@ package com.example.android.miwok;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import com.example.android.miwok.activities.ColorsActivity;
-import com.example.android.miwok.activities.FamilyActivity;
-import com.example.android.miwok.activities.NumbersActivity;
-import com.example.android.miwok.activities.PhrasesActivity;
+import com.example.android.miwok.fragments.VocabFragmentFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,43 +36,29 @@ public class MainActivity extends AppCompatActivity {
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
 
-        setButtonClickListeners();
-    }
+        ViewPager _pager = (ViewPager) findViewById(R.id.mainViewPager);
 
-    private void setButtonClickListeners() {
-        TextView colorsButton = (TextView) findViewById(R.id.colors);
-        assert ( colorsButton != null );
-        colorsButton.setOnClickListener(new View.OnClickListener() {
+        assert _pager != null;
+
+        _pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
-            public void onClick( View v ) {
-                openMyActivity(v, ColorsActivity.class);
+            public Fragment getItem( int position ) {
+                switch (position) {
+                    case 0:
+                        return VocabFragmentFactory.NumbersFragment;
+                    case 1:
+                        return VocabFragmentFactory.FamilyFragment;
+                    case 2:
+                        return VocabFragmentFactory.ColorsFragment;
+                    case 3:
+                        return VocabFragmentFactory.PhrasesFragment;
+                }
+                return VocabFragmentFactory.PhrasesFragment;
             }
-        });
 
-        TextView numbersButton = (TextView) findViewById(R.id.numbers);
-        assert numbersButton != null;
-        numbersButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick( View v ) {
-                openMyActivity(v, NumbersActivity.class);
-            }
-        });
-
-        TextView familyButton = (TextView) findViewById(R.id.family);
-        assert familyButton != null;
-        familyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                openMyActivity(v, FamilyActivity.class);
-            }
-        });
-
-        TextView phrasesButton = (TextView) findViewById(R.id.phrases);
-        assert phrasesButton != null;
-        phrasesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                openMyActivity(v, PhrasesActivity.class);
+            public int getCount() {
+                return 4;
             }
         });
     }
