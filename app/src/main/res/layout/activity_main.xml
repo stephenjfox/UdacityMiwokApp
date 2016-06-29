@@ -22,6 +22,12 @@
     android:orientation="vertical"
     tools:context="com.example.android.miwok.MainActivity">
 
+  <android.support.design.widget.TabLayout
+      android:id="@+id/mainTabNav"
+      style="@style/MyCustomTabLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
   <android.support.v4.view.ViewPager
       android:id="@+id/mainViewPager"
       android:layout_width="match_parent"

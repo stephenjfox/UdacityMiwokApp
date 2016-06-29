@@ -15,14 +15,17 @@
  */
 package com.example.android.miwok;
 
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import com.example.android.miwok.fragments.VocabFragmentFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,38 +43,74 @@ public class MainActivity extends AppCompatActivity {
 
         assert _pager != null;
 
-        _pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem( int position ) {
-                switch (position) {
-                    case 0:
-                        return VocabFragmentFactory.NumbersFragment;
-                    case 1:
-                        return VocabFragmentFactory.FamilyFragment;
-                    case 2:
-                        return VocabFragmentFactory.ColorsFragment;
-                    case 3:
-                        return VocabFragmentFactory.PhrasesFragment;
-                }
-                return VocabFragmentFactory.PhrasesFragment;
-            }
+        _pager.setAdapter(mPagerAdapter);
 
-            @Override
-            public int getCount() {
-                return 4;
-            }
-        });
+        TabLayout _tabLayout = (TabLayout) findViewById(R.id.mainTabNav);
+        _tabLayout.setupWithViewPager(_pager);
     }
 
-    private void openMyActivity( View view, Class<?> activityLoadClass ) {
-        Log.d(TAG, "openMyActivity() called with: " + "view = [" + view + "]");
+    private FragmentPagerAdapter mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
-        // This is just extra logging, so memory's sake
-        String _name = getResources().getResourceEntryName(view.getId());
-        Log.d(TAG, "openMyActivity: view.id = " + _name);
+        private int[] mImageResIds = {
+                R.drawable.number_one,
+                R.drawable.family_father,
+                R.drawable.color_green,
+                R.drawable.ic_play_arrow_black_24dp
+        };
 
-        Intent i = new Intent(this, activityLoadClass);
-        startActivity(i);
-    }
+        @Override
+        public Fragment getItem( int position ) {
+            switch (position) {
+                case 0:
+                    return VocabFragmentFactory.NumbersFragment;
+                case 1:
+                    return VocabFragmentFactory.FamilyFragment;
+                case 2:
+                    return VocabFragmentFactory.ColorsFragment;
+                case 3:
+                    return VocabFragmentFactory.PhrasesFragment;
+            }
+            return VocabFragmentFactory.PhrasesFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+        @Override
+        public CharSequence getPageTitle( int position ) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.category_numbers);
+                case 1:
+                    return getString(R.string.category_family);
+                case 2:
+                    return getString(R.string.category_colors);
+                case 3:
+                    return getString(R.string.category_phrases);
+            }
+            return null;
+        }
+
+        // FIXME: 6/28/16 no images actually draw
+        private CharSequence getIconPageTitle( int position ) {
+            // Generate title based on item position
+            // return tabTitles[position];
+
+            // getDrawable(int i) is deprecated, use getDrawable(int i, Theme theme) for min SDK >=21
+            // or ContextCompat.getDrawable(Context context, int id) if you want support for older versions.
+            // Drawable image = context.getResources().getDrawable(iconIds[position], context.getTheme());
+            // Drawable image = context.getResources().getDrawable(mImageResIds[position]);
+
+            Drawable image = ContextCompat.getDrawable(MainActivity.this, mImageResIds[position]);
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+            SpannableString sb = new SpannableString(" ");
+            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+            sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return sb;
+
+        }
+    };
 
 }
