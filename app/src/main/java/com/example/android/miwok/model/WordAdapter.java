@@ -15,7 +15,7 @@ import com.example.android.miwok.R;
 import java.util.List;
 
 /**
- * Custom Adapter for showing our model.Word type
+ * Custom Adapter for showing our model.Word type in a list-y fashion
  * Created by stefox2 on 6/25/16.
  */
 public class WordAdapter extends ArrayAdapter<Word> {

@@ -3,7 +3,6 @@ package com.example.android.miwok.model;
 import com.example.android.miwok.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Statically initialized vocabulary lists, to be loaded by their associated
@@ -11,8 +10,7 @@ import java.util.List;
  * Created by stefox2 on 6/25/16.
  */
 public class WordStore {
-    // TODO: 6/25/16 Need audio files from the course (Multi-screen android apps)
-    public static final List<Word> NUMBERS_VOCAB = new ArrayList<Word>(10) {{
+    public static final ArrayList<Word> NUMBERS_VOCAB = new ArrayList<Word>(10) {{
         add(new Word("one", "lutti", R.drawable.number_one, R.raw.number_one));
         add(new Word("two", "otiiko", R.drawable.number_two, R.raw.number_two));
         add(new Word("three", "tolookosu", R.drawable.number_three, R.raw.number_three));
@@ -25,7 +23,7 @@ public class WordStore {
         add(new Word("ten", "na'aacha", R.drawable.number_ten, R.raw.number_ten));
     }};
 
-    public static final List<Word> FAMILY_VOCAB = new ArrayList<Word>(10){{
+    public static final ArrayList<Word> FAMILY_VOCAB = new ArrayList<Word>(10){{
         add(new Word("father", "әpә", R.drawable.family_father, R.raw.family_father));
         add(new Word("mother", "әṭa", R.drawable.family_mother, R.raw.family_mother));
         add(new Word("son", "angsi", R.drawable.family_son, R.raw.family_son));
@@ -45,7 +43,7 @@ public class WordStore {
                 R.drawable.family_grandmother, R.raw.family_grandmother));
     }};
 
-    public static final List<Word> COLORS_VOCAB = new ArrayList<Word>(10){{
+    public static final ArrayList<Word> COLORS_VOCAB = new ArrayList<Word>(10){{
         add(new Word("red", "weṭeṭṭi", R.drawable.color_red, R.raw.color_red));
         add(new Word("green", "chokokki", R.drawable.color_green, R.raw.color_green));
         add(new Word("brown", "ṭakaakki", R.drawable.color_brown, R.raw.color_brown));
@@ -57,7 +55,7 @@ public class WordStore {
         add(new Word("mustard yellow", "chiwiiṭә",
                 R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
     }};
-    public static final List<Word> PHRASES_VOCAB = new ArrayList<Word>(10) {{
+    public static final ArrayList<Word> PHRASES_VOCAB = new ArrayList<Word>(10) {{
         add(Word.withAudio("What is you name?", "tinnә oyaase'nә", R.raw.phrase_what_is_your_name));
         add(Word.withAudio("Where are you going?", "minto wuksus", R.raw.phrase_where_are_you_going));
         add(Word.withAudio("How are you feeling?", "michәksәs?", R.raw.phrase_how_are_you_feeling));

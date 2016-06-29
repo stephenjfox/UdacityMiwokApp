@@ -1,4 +1,4 @@
-package com.example.android.miwok;
+package com.example.android.miwok.activities;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.example.android.miwok.R;
 import com.example.android.miwok.model.Word;
 import com.example.android.miwok.model.WordAdapter;
 

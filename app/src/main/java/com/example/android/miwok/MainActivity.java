@@ -21,6 +21,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.example.android.miwok.activities.ColorsActivity;
+import com.example.android.miwok.activities.FamilyActivity;
+import com.example.android.miwok.activities.NumbersActivity;
+import com.example.android.miwok.activities.PhrasesActivity;
 
 public class MainActivity extends AppCompatActivity {
 
