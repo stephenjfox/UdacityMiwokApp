@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.android.miwok.R;
 
 import java.util.List;
+
+import static com.fox.android.view.ViewExtensions.find;
 
 /**
  * Custom Adapter for showing our model.Word type in a list-y fashion
@@ -46,24 +47,23 @@ public class WordAdapter extends ArrayAdapter<Word> {
         Log.d(TAG, "getView: word = " + _word);
 
         if (this.mItemBackgroundColor > -1) {
-            ViewGroup _owningLayout = (GridLayout) _listItemView.findViewById(R.id.hostingGrid);
-//            LinearLayout _textLayout = (LinearLayout) _listItemView.findViewById(R.id.textVocabLayout);
-            // we need a new background
+            ViewGroup _owningLayout = find(_listItemView, R.id.hostingGrid);
+
             _owningLayout.setBackgroundResource(mItemBackgroundColor);
         }
 
         // Get the first TextView
-        TextView foreignTextView = (TextView) _listItemView.findViewById(R.id.foreignText);
+        TextView foreignTextView = find(_listItemView, R.id.foreignText);
         // Set its text
         foreignTextView.setText(_word.getMiwokTranslation());
 
         // Get the other TextView
-        TextView nativeTextView = (TextView) _listItemView.findViewById(R.id.nativeText);
+        TextView nativeTextView = find(_listItemView, R.id.nativeText);
         // Set its text
         nativeTextView.setText(_word.getDefaultTranslation());
 
         // The image that is part of this view
-        ImageView _imageView = (ImageView) _listItemView.findViewById(R.id.vocabImage);
+        ImageView _imageView = find(_listItemView, R.id.vocabImage);
 
         _imageView.setImageResource(_word.getImageResourceId());
 

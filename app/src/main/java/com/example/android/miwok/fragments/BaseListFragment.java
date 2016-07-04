@@ -13,13 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import com.example.android.miwok.R;
 import com.example.android.miwok.model.Word;
 import com.example.android.miwok.model.WordAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fox.android.view.ViewExtensions.find;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,7 +82,7 @@ public class BaseListFragment extends Fragment {
 
         Log.i(TAG, "onCreateView: inflated layout - " + _inflate);
 
-        AbsListView _listView = (ListView) _inflate.findViewById(R.id.rootListView);
+        AbsListView _listView = find(_inflate, R.id.rootListView);
 
         if (savedInstanceState != null) {
             ArrayList<Word> wordsList = savedInstanceState.getParcelableArrayList(WORDS_LIST);

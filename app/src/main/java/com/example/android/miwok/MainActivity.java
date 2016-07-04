@@ -28,6 +28,8 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import com.example.android.miwok.fragments.VocabFragmentFactory;
 
+import static com.fox.android.view.ViewExtensions.find;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -39,13 +41,11 @@ public class MainActivity extends AppCompatActivity {
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
 
-        ViewPager _pager = (ViewPager) findViewById(R.id.mainViewPager);
-
-        assert _pager != null;
+        ViewPager _pager = find(this, R.id.mainViewPager);
 
         _pager.setAdapter(mPagerAdapter);
 
-        TabLayout _tabLayout = (TabLayout) findViewById(R.id.mainTabNav);
+        TabLayout _tabLayout = find(this, R.id.mainTabNav);
         _tabLayout.setupWithViewPager(_pager);
     }
 
